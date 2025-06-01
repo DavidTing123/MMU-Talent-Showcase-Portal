@@ -1,5 +1,3 @@
-# MMU-Talent-Showcase-Portal
-Web portal for MMU students to showcase talents and collaborate
 # MMU Talent Showcase Portal
 Web platform for MMU students to showcase talents, collaborate, and find gigs.
 
