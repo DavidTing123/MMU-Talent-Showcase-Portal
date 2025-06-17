@@ -3,6 +3,7 @@ require_once "db_connect.php"; // 資料庫連線
 $message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = htmlspecialchars(trim($_POST["name"]));
     $email = htmlspecialchars(trim($_POST["email"]));
     $password = $_POST["password"];
     $confirm_password = $_POST["confirm_password"];
@@ -31,8 +32,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $userId = $conn->lastInsertId();
 
             // 儲存才藝分類到 user_profile 表
-            $stmt2 = $conn->prepare("INSERT INTO user_profile (user_id, talent_category) VALUES (?, ?)");
-            $stmt2->execute([$userId, $category]);
+            $stmt2 = $conn->prepare("INSERT INTO user_profile (user_id, name, talent_category) VALUES (?, ?, ?)");
+            $stmt2->execute([$userId, $name, $category]);
+
 
             // 導向登入頁
             header("Location: login.php");
@@ -50,6 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <h2>User Registration</h2>
     <form method="POST">
+        Name: <input type="text" name="name" required><br><br>
+
         Email: <input type="email" name="email" required><br><br>
 
         Password: <input type="password" name="password" required><br><br>
