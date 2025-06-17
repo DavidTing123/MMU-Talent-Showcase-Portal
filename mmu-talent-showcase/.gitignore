@@ -1,9 +1,0 @@
-# Ignore environment/config files
-.env
-config.php
-
-# Ignore uploaded user files
-public/uploads/*
-
-# Ignore OS files
-.DS_Store
