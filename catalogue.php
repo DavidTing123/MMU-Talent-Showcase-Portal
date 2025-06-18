@@ -1,146 +1,80 @@
 <!DOCTYPE html>
-<!-- Declares the document type as HTML5 -->
-
-<html>
+<html lang="en">
 <head>
-    <title>Talent Catalogue</title>
-    <!-- Sets the title shown in the browser tab -->
-
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Links an external CSS file for styling the page -->
-
-    <script src="js/filter.js" defer></script>
-    <!-- Links an external JavaScript file that contains filtering logic.
-         The "defer" attribute makes sure the script runs after the HTML is loaded -->
+    <meta charset="UTF-8">
+    <title>Catalogue</title>
+    <link rel="stylesheet" href="catalogue.css"> <!-- External CSS -->
 </head>
-
 <body>
-    <!-- Start of the body content -->
 
-    <header>
-        <!-- Header section contains the logo, navigation, and filter tabs -->
+<!-- Header -->
+<header class="navbar">
+    <!-- Left: Logo -->
+    <a href="index.php" class="logo">
+        <img src="image/mmu-logo.png" alt="MMU Logo">
+    </a>
 
-        <div class="logo">LOGO</div>
-        <div class="name">CATALOGUE</div>
-        <!-- Placeholder for the site's logo -->
+    <!-- Center: Catalogue Title -->
+    <div class="title">Catalogue</div>
 
-        <nav>
-            <!-- Navigation bar -->
+    <!-- Right: Search + Profile -->
+    <div class="nav-right">
+        <input type="text" class="search-bar" placeholder="Search">
+        <a href="profile.php"><img src="image/profile-icon.png" alt="Profile" class="profile-icon"></a>
+    </div>
+</header>
 
-            <input type="text" id="search" placeholder="Search...">
-            <!-- Search input field with ID for JS targeting -->
+<!-- Navigation Links below title -->
+<nav class="category-nav">
+    <a href="#music">Music</a>
+    <a href="#technology">Technology</a>
+    <a href="#art">Art</a>
+</nav>
 
-            <button onclick="searchTalent()">🔍</button>
-            <!-- Button that triggers the searchTalent() JavaScript function on click -->
+<!-- Banner -->
+<div class="banner">
+    <img src="image/talent-banner.png" alt="Banner">
+    <div class="banner-text">DISCOVER ALL OUR TALENTS</div>
+</div>
 
-            <span class="user-icon">👤</span>
-            <!-- Icon or placeholder for user profile (static text/icon for now) -->
-        </nav>
-
-        <div class="tabs">
-            <!-- Category filter buttons -->
-
-            <button onclick="filterCategory('all')">All</button>
-            <!-- Filters to show all items -->
-
-            <button onclick="filterCategory('music')">Music</button>
-            <!-- Filters to show only Music category -->
-
-            <button onclick="filterCategory('technology')">Technology</button>
-            <!-- Filters to show only Technology category -->
-
-            <button onclick="filterCategory('art')">Art</button>
-            <!-- Filters to show only Art category -->
-        </div>
-    </header>
-
-    <section class="hero">
-        <!-- Hero section with main message -->
-
-        <h1>Discover all our talents</h1>
-        <!-- Large heading encouraging users to explore talents -->
-    </section>
-
-    <section class="talent-section" id="music">
-        <!-- Section for Music talents -->
-
-        <h2>Music</h2>
-        <!-- Title for this category -->
-
-        <div class="grid">
-            <!-- Container for talent cards displayed in a grid -->
-
-            <?php for ($i = 1; $i <= 5; $i++): ?>
-            <!-- PHP loop to generate 5 music talent cards -->
-
-            <div class="talent-card category-music">
-                <!-- Single card styled as music category -->
-
-                <img src="images/song<?= $i ?>.jpg" alt="Song <?= $i ?>">
-                <!-- Image path uses PHP to dynamically insert the number (e.g., song1.jpg) -->
-
-                <p>Song <?= $i ?><br><small>Description</small></p>
-                <!-- Text showing song number and a small description -->
+<!-- Music Section -->
+<section id="music" class="section">
+    <h2>Music</h2>
+    <div class="card-container">
+        <?php for ($i = 1; $i <= 8; $i++): ?>
+            <div class="card">
+                <img src="music-icon.png" alt="Song <?= $i ?>">
+                <p><strong>Song <?= $i ?></strong><br>Description</p>
             </div>
+        <?php endfor; ?>
+    </div>
+</section>
 
-            <?php endfor; ?>
-            <!-- End of PHP loop -->
-        </div>
-    </section>
-
-    <section class="talent-section" id="technology">
-        <!-- Section for Technology talents -->
-
-        <h2>Technology</h2>
-        <!-- Title for this category -->
-
-        <div class="grid">
-            <!-- Container for technology cards -->
-
-            <?php for ($i = 1; $i <= 5; $i++): ?>
-            <!-- PHP loop to generate 5 technology talent cards -->
-
-            <div class="talent-card category-technology">
-                <!-- Single card styled as technology category -->
-
-                <img src="images/video<?= $i ?>.jpg" alt="Video <?= $i ?>">
-                <!-- Image path uses PHP to dynamically insert the number (e.g., video1.jpg) -->
-
-                <p>Video <?= $i ?><br><small>Description</small></p>
-                <!-- Text showing video number and description -->
+<!-- Technology Section -->
+<section id="technology" class="section">
+    <h2>Technology</h2>
+    <div class="card-container">
+        <?php for ($i = 1; $i <= 7; $i++): ?>
+            <div class="card">
+                <img src="music-icon.png" alt="Video <?= $i ?>">
+                <p><strong>Video <?= $i ?></strong><br>Description</p>
             </div>
+        <?php endfor; ?>
+    </div>
+</section>
 
-            <?php endfor; ?>
-            <!-- End of PHP loop -->
-        </div>
-    </section>
-
-    <section class="talent-section" id="art">
-        <!-- Section for Art talents -->
-
-        <h2>Art</h2>
-        <!-- Title for this category -->
-
-        <div class="grid">
-            <!-- Container for art cards -->
-
-            <?php for ($i = 1; $i <= 5; $i++): ?>
-            <!-- PHP loop to generate 5 art talent cards -->
-
-            <div class="talent-card category-art">
-                <!-- Single card styled as art category -->
-
-                <img src="images/art<?= $i ?>.jpg" alt="Artwork <?= $i ?>">
-                <!-- Image path uses PHP to dynamically insert the number (e.g., art1.jpg) -->
-
-                <p>Artwork <?= $i ?><br><small>Description</small></p>
-                <!-- Text showing artwork number and description -->
+<!-- Art Section -->
+<section id="art" class="section">
+    <h2>Art</h2>
+    <div class="card-container">
+        <?php for ($i = 1; $i <= 6; $i++): ?>
+            <div class="card">
+                <img src="music-icon.png" alt="Art <?= $i ?>">
+                <p><strong>Art <?= $i ?></strong><br>Description</p>
             </div>
-
-            <?php endfor; ?>
-            <!-- End of PHP loop -->
-        </div>
-    </section>
+        <?php endfor; ?>
+    </div>
+</section>
 
 </body>
 </html>
