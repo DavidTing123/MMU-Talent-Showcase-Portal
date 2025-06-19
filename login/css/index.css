@@ -1,0 +1,146 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.navbar {
+    background-color: #333;
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.navbar li {
+    margin: 0 30px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.banner {
+    background-color: #007BFF;
+    color: white;
+    text-align: center;
+    padding: 120px 20px;
+    font-size: 38px;
+}
+
+.filter-section {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.filter-btn {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.filter-btn:hover {
+    background-color: #0056b3;
+}
+
+.trending {
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+}
+
+.carousel-wrapper {
+    position: relative;
+    width: 830px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.talent-box {
+    width: 250px;
+    height: 250px;
+    background-color: #ddd;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.talent-box img, .talent-box video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    z-index: 9999;
+}
+
+.arrow.left {
+    left: -10px;
+}
+
+.arrow.right {
+    right: -10px;
+}
+
+.join-button {
+    text-align: center;
+    margin: 60px 0;
+}
+
+.join-button button {
+    padding: 20px 60px;
+    font-size: 22px;
+    background-color: #007BFF;
+    border: none;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.join-button button:hover {
+    background-color: #0056b3;
+}

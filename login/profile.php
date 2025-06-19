@@ -85,6 +85,7 @@ if ($data) {
 <html>
 <head>
     <title>My Profile</title>
+    <!-- <link rel="stylesheet" href="css/profile.css"> -->
 </head>
 <body>
     <h2>Profile</h2>
