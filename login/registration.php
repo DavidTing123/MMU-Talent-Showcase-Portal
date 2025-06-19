@@ -48,9 +48,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
     <title>User Registration</title>
+    <link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
     <h2>User Registration</h2>
+    <link rel="stylesheet" href="css/style.css">
+
     <form method="POST">
         Name: <input type="text" name="name" required><br><br>
 
