@@ -71,98 +71,117 @@ if ($data) {
         : "default-avatar.png";
 }
 
-// // ✅ 更新 bio
-// if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["bio"])) {
-//     $new_bio = htmlspecialchars(trim($_POST["bio"]));
-//     $update = $conn->prepare("UPDATE user_profile SET bio = ? WHERE user_id = ?");
-//     $update->execute([$new_bio, $user_id]);
-//     $message = "Bio updated successfully.";
-//     $bio = $new_bio;
-// }
+// ✅ 初始化作品集
+$portfolios = [];
+$stmt = $conn->prepare("SELECT * FROM portfolio WHERE user_id = ?");
+$stmt->execute([$user_id]);
+$portfolios = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>My Profile</title>
-    <!-- <link rel="stylesheet" href="css/profile.css"> -->
+    <link rel="stylesheet" href="css/profile.css">
 </head>
 <body>
-    <h2>Profile</h2>
+<div class="profile-container">
+
+    <div class="menu-icon" onclick="document.querySelector('.menu-popup').classList.toggle('active')">
+        ☰
+    </div>
+
+    <div class="menu-popup">
+        <a href="index.php">Home</a>
+        <a href="catalogue.php">Catalogue</a>
+        <a href="forum.php">Forum</a>
+        <a href="FAQs.php">FAQs</a>
+        <a href="registration.php">Sign Up</a>
+        <a href="shoppingcart.php">Shoping</a>
+    </div>
+
+    <h2>My Profile</h2>
 
     <?php if ($message): ?>
         <p style="color:green;"><?= $message ?></p>
     <?php endif; ?>
 
-    <!-- ✅ 點圖片上傳大頭貼 -->
-    <form method="POST" enctype="multipart/form-data" id="profilePicForm">
-        <input type="hidden" name="upload_pic" value="1">
-        <input type="file" name="profile_pic" id="profilePicInput" accept="image/*" style="display:none;" onchange="document.getElementById('profilePicForm').submit();">
-        
-        <img src="<?= $pic_path ?>" alt="Profile Picture" width="120" height="120"
-             style="border-radius:50%; border:2px solid gray; cursor:pointer;"
-             onclick="document.getElementById('profilePicInput').click();">
-    </form>
-    <small>Click the image to update your profile picture</small>
-
-    <hr>
-
-    <!-- ✅ 顯示使用者資訊 -->
-    <p><strong>Name:</strong> <?= htmlspecialchars($name) ?></p>
-    <p><strong>Email:</strong> <?= htmlspecialchars($email) ?></p>
-    <p><strong>Talent Category:</strong> <?= htmlspecialchars($category) ?></p>
-    <p><strong>Bio:</strong> <?= nl2br(htmlspecialchars($bio)) ?></p>
-
-
-    <!-- ✅ 編輯 Bio -->
-    <!-- <h3>Edit Your Bio</h3>
-    <form method="POST">
-        <textarea name="bio" rows="5" cols="40">
-            <= htmlspecialchars($bio) ?>
-        </textarea><br><br>
-        <button type="submit">Update Bio</button>
-    </form> -->
-    <a href="edit_profile.php">✏️ Edit Profile Info</a><br>
-
-    <br><hr><br>
-
-    <!-- ✅ 顯示作品 -->
-    <h3>My Uploaded Works:</h3>
-    <div style="display:flex; flex-wrap:wrap; gap:20px;">
-    <?php
-    $stmt = $conn->prepare("SELECT * FROM portfolio WHERE user_id = ?");
-    $stmt->execute([$user_id]);
-    $portfolios = $stmt->fetchAll();
-
-    foreach ($portfolios as $p):
-        $filePath = $p["file_path"];
-        $fileType = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
-    ?>
-        <div style="border:1px solid #ccc; padding:10px; width:250px;">
-            <strong><?= htmlspecialchars($p["title"]) ?></strong><br>
-            <em><?= $p["category"] ?></em><br><br>
-
-            <?php if (in_array($fileType, ['jpg', 'jpeg', 'png', 'gif'])): ?>
-                <img src="<?= $filePath ?>" style="width:100%; height:auto;"><br>
-            <?php elseif ($fileType === 'mp4'): ?>
-                <video controls width="100%">
-                    <source src="<?= $filePath ?>" type="video/mp4">
-                </video><br>
-            <?php else: ?>
-                <a href="<?= $filePath ?>" target="_blank">Download File</a><br>
-            <?php endif; ?>
-
-            <form method="POST" style="margin-top:10px;">
-                <input type="hidden" name="delete_id" value="<?= $p["portfolio_id"] ?>">
-                <button type="submit" onclick="return confirm('Are you sure you want to delete this work?')">Delete</button>
+    <div class="top-section">
+        <div class="profile-pic">
+            <form method="POST" enctype="multipart/form-data" id="profilePicForm">
+                <input type="hidden" name="upload_pic" value="1">
+                <input type="file" name="profile_pic" id="profilePicInput" accept="image/*" style="display:none;" onchange="document.getElementById('profilePicForm').submit();">
+                <img src="<?= $pic_path ?>" onclick="document.getElementById('profilePicInput').click();">
             </form>
+            <a href="edit_bio.php" style="text-decoration:none; color:inherit;">
+    <div class="bio-box" title="Click to edit your bio">
+        <?= nl2br(htmlspecialchars($bio)) ?>
+    </div>
+</a>
+
         </div>
 
-    <?php endforeach; ?>
+        <div class="info-box">
+            <p><strong>Name:</strong> <?= htmlspecialchars($name) ?></p>
+            <p><strong>Email:</strong> <?= htmlspecialchars($email) ?></p>
+            <p><strong>Talent Category:</strong> <?= htmlspecialchars($category) ?></p>
+            <button class="edit-btn" onclick="location.href='edit_info.php'">Edit Info</button>
+            <!-- <button class="edit-btn" onclick="location.href='edit_bio.php'">Edit Bio</button> -->
+            <!-- <button class="edit-btn" onclick="location.href='edit_profile.php'">Edit Information</button> -->
+        </div>
     </div>
 
-    <br><br>
-    <a href="upload_portfolio.php">+ Upload New Work</a><br>
-    <a href="logout.php">Logout</a>
+    <div class="portfolio-section">
+        <h3>Portfolio(s) <a href="upload_portfolio.php" class="edit-btn" style="font-size:14px;">Upload</a></h3>
+<div class="portfolio-list">
+    <?php if (count($portfolios) === 0): ?>
+        <p style="margin-left: 10px;">You haven't uploaded any portfolio yet.</p>
+    <?php else: ?>
+        <?php foreach ($portfolios as $p): ?>
+            <?php
+                $filePath = $p["file_path"];
+                $fileType = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+            ?>
+            <div class="portfolio-item">
+                <strong><?= htmlspecialchars($p["title"]) ?></strong><br>
+
+                <a href="view_portfolio.php?id=<?= $p["portfolio_id"] ?>&back=profile.php">
+                    <?php if (in_array($fileType, ['jpg', 'jpeg', 'png', 'gif'])): ?>
+                        <img src="<?= $filePath ?>" style="max-width: 100%; height: auto; border-radius: 8px;">
+                    <?php elseif ($fileType === 'mp4'): ?>
+                        <video style="width: 100%; border-radius: 8px;" muted>
+                            <source src="<?= $filePath ?>" type="video/mp4">
+                        </video>
+                    <?php endif; ?>
+                </a>
+
+
+                <a href="edit_portfolio.php?id=<?= $p["portfolio_id"] ?>" style="font-size: 14px; color: blue;">✏️ Edit</a>
+
+                <form method="POST" style="margin-top:5px;">
+                    <input type="hidden" name="delete_id" value="<?= $p["portfolio_id"] ?>">
+                    <button type="submit" onclick="return confirm('Are you sure you want to delete this work?')">Delete</button>
+                </form>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+    </div>
+
+    <br><a href="logout.php">Logout</a>
+</div>
+<script>
+function openFullscreen(imgElement) {
+    if (imgElement.requestFullscreen) {
+        imgElement.requestFullscreen();
+    } else if (imgElement.webkitRequestFullscreen) {
+        imgElement.webkitRequestFullscreen();
+    } else if (imgElement.msRequestFullscreen) {
+        imgElement.msRequestFullscreen();
+    }
+}
+</script>
+
 </body>
 </html>
+
+

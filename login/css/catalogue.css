@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #00c4cc;
+    background-color: #d8cdbd;
 }
 
 /* Top Navbar */
@@ -12,7 +12,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
-    background-color: #00c4cc;
+    background-color: #d8cdbd;
     border-bottom: 1px solid #aaa;
 }
 
@@ -53,7 +53,7 @@ body {
 .category-nav {
     text-align: center;
     padding: 10px 0;
-    background-color: #d8bdc9;
+    background-color: #d8cdbd;
 }
 
 .category-nav a {

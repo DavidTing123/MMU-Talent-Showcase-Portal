@@ -2,70 +2,50 @@
 require_once "auth.php";
 require_once "db_connect.php";
 
+if (!isset($_GET["id"])) {
+    die("❌ Portfolio ID not provided.");
+}
+
+$portfolio_id = $_GET["id"];
 $user_id = $_SESSION["user_id"];
-$message = "";
-$name = "";
-$category = "";
-$bio = "";
 
-// 讀取目前資料
-$stmt = $conn->prepare("SELECT name, talent_category, bio FROM user_profile WHERE user_id = ?");
-$stmt->execute([$user_id]);
-$data = $stmt->fetch();
+// 查詢作品
+$stmt = $conn->prepare("SELECT * FROM portfolio WHERE portfolio_id = ? AND user_id = ?");
+$stmt->execute([$portfolio_id, $user_id]);
+$portfolio = $stmt->fetch();
 
-if ($data) {
-    $name = $data["name"];
-    $category = $data["talent_category"];
-    $bio = $data["bio"];
+if (!$portfolio) {
+    die("❌ Portfolio not found or access denied.");
 }
 
-// 處理更新請求
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $new_name = htmlspecialchars(trim($_POST["name"]));
-    $new_category = $_POST["category"];
-    $new_bio = htmlspecialchars(trim($_POST["bio"]));
-
-    $stmt = $conn->prepare("UPDATE user_profile SET name = ?, talent_category = ?, bio = ? WHERE user_id = ?");
-    $stmt->execute([$new_name, $new_category, $new_bio, $user_id]);
-
-    $message = "✅ Profile updated successfully!";
-    $name = $new_name;
-    $category = $new_category;
-    $bio = $new_bio;
-}
+$fileType = strtolower(pathinfo($portfolio["file_path"], PATHINFO_EXTENSION));
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Edit Profile</title>
+    <title><?= htmlspecialchars($portfolio["title"]) ?> - Details</title>
     <link rel="stylesheet" href="css/style.css">
-
 </head>
 <body>
-    <h2>Edit Profile Info</h2>
+    <h2><?= htmlspecialchars($portfolio["title"]) ?></h2>
+    <p><strong>Category:</strong> <?= htmlspecialchars($portfolio["category"]) ?></p>
 
-    <?php if ($message): ?>
-        <p style="color:green;"><?= $message ?></p>
+    <?php if (in_array($fileType, ['jpg', 'jpeg', 'png', 'gif'])): ?>
+        <img src="<?= $portfolio["file_path"] ?>" style="max-width:100%; border-radius:8px;" onclick="this.requestFullscreen()">
+    <?php elseif ($fileType === 'mp4'): ?>
+        <video controls style="width:100%; border-radius:8px;" onclick="this.requestFullscreen()">
+            <source src="<?= $portfolio["file_path"] ?>" type="video/mp4">
+        </video>
     <?php endif; ?>
 
-    <form method="POST">
-        <label>Name:</label><br>
-        <input type="text" name="name" value="<?= htmlspecialchars($name) ?>" required><br><br>
+    <div style="margin-top:20px;">
+        <h4>Description</h4>
+        <p><?= nl2br(htmlspecialchars($portfolio["description"])) ?: "No description available." ?></p>
 
-        <label>Talent Category:</label><br>
-        <select name="category">
-            <option value="Music" <?= $category == "Music" ? "selected" : "" ?>>Music</option>
-            <option value="Tech" <?= $category == "Tech" ? "selected" : "" ?>>Tech</option>
-            <option value="Art" <?= $category == "Art" ? "selected" : "" ?>>Art</option>
-            <option value="Writing" <?= $category == "Writing" ? "selected" : "" ?>>Writing</option>
-        </select><br><br>
-
-        <label>Bio:</label><br>
-        <textarea name="bio" rows="5" cols="40"><?= htmlspecialchars($bio) ?></textarea><br><br>
-
-        <button type="submit">Save Changes</button>
-    </form>
+        <h4>Price</h4>
+        <p style="color:green; font-weight:bold;">RM <?= number_format($portfolio["price"], 2) ?></p>
+    </div>
 
     <br>
     <a href="profile.php">← Back to Profile</a>
