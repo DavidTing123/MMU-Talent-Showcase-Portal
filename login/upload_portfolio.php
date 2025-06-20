@@ -14,13 +14,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $targetDir = "uploads/";
         $targetFilePath = $targetDir . time() . "_" . $fileName;
         $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
+        $description = htmlspecialchars($_POST["description"]);
+        $price = floatval($_POST["price"]);
 
         $allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'mp4', 'zip'];
         if (in_array($fileType, $allowedTypes)) {
             if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
                 // 儲存進資料庫
-                $stmt = $conn->prepare("INSERT INTO portfolio (user_id, title, file_path, category) VALUES (?, ?, ?, ?)");
-                $stmt->execute([$user_id, $title, $targetFilePath, $category]);
+                $stmt = $conn->prepare("INSERT INTO portfolio (user_id, title, file_path, category, description, price) VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt->execute([$user_id, $title, $targetFilePath, $category, $description, $price]);
 
                 $message = "Upload successful!";
             } else {
@@ -57,6 +59,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <option value="Writing">Writing</option>
         </select><br><br>
         File: <input type="file" name="file" required><br><br>
+        Description: <br>
+        <textarea name="description" rows="4" cols="50" placeholder="Describe your work..."></textarea><br><br>
+        <label>Price (RM):</label><br>
+        <input type="number" name="price" step="0.01" required><br><br>
+
         <button type="submit">Upload</button>
     </form>
     <br>

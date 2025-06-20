@@ -1,0 +1,108 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.navbar {
+    background-color: #111;
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.banner {
+    background: linear-gradient(to right, #007BFF, #00AEEF);
+    color: white;
+    text-align: center;
+    padding: 80px 20px;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.tab-buttons {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.tab-buttons .tab-btn {
+    margin: 0 10px;
+    padding: 10px 25px;
+    background-color: #007BFF;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.tab-buttons .tab-btn.active {
+    background-color: #0056b3;
+}
+
+.tab-content {
+    width: 90%;
+    margin: 0 auto 60px auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+th {
+    background-color: #f1f1f1;
+}
+
+.success-btn, .danger-btn {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.success-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.danger-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}

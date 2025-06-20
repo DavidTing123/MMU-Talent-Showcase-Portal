@@ -1,93 +1,125 @@
-/* css/profile.css */
-
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #f5f5f5;
-}
+        font-family: Georgia, serif;
+        background-color: #d3dfed;
+        margin: 0;
+        padding: 20px;
+    }
 
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
+    .profile-container {
+        max-width: 1000px;
+        margin: auto;
+    }
 
-h1 {
-    color: #333;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-}
+    h2 {
+        text-align: center;
+        font-size: 32px;
+    }
 
-.profile-info {
-    margin-bottom: 20px;
-}
+    .top-section {
+        display: flex;
+        align-items: start;
+        gap: 30px;
+    }
 
-.profile-info p {
-    margin: 5px 0;
-    padding: 8px 0;
-    border-bottom: 1px solid #f0f0f0;
-}
+    .profile-pic {
+        text-align: center;
+    }
 
-.edit-btn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 10px;
-}
+    .profile-pic img {
+        border-radius: 12px;
+        border: 2px solid #555;
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        cursor: pointer;
+    }
 
-.portfolio-section {
-    margin-top: 30px;
-}
+    .bio-box {
+        background: #999;
+        padding: 10px;
+        color: white;
+        width: 120px;
+        height: 120px;
+        position: relative;
+    }
 
-.upload-btn {
-    background-color: #2196F3;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-}
+    .bio-box::after {
+        content: '✏️';
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 14px;
+        color: white;
+    }
 
-.nav-menu {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-    background: #333;
-    padding: 10px;
-    border-radius: 4px;
-}
+    .info-box {
+        flex-grow: 1;
+    }
 
-.nav-menu a {
-    color: white;
-    text-decoration: none;
-}
+    .info-box p {
+        font-size: 18px;
+        border-bottom: 1px solid black;
+        margin-bottom: 20px;
+    }
 
-.song-list {
-    margin-top: 20px;
-}
+    .edit-btn {
+        display: inline-block;
+        padding: 8px 20px;
+        background-color: #fffaf2;
+        border-radius: 20px;
+        border: 1px solid black;
+        cursor: pointer;
+        font-family: Georgia, serif;
+    }
 
-.song-list p {
-    padding: 8px;
-    background: #f9f9f9;
-    border-left: 3px solid #2196F3;
-}
+    .portfolio-section {
+        margin-top: 40px;
+    }
 
-/* Success message style */
-.success-message {
-    color: green;
-    padding: 10px;
-    margin-bottom: 15px;
-    background-color: #e8f5e9;
-    border-radius: 4px;
-}
+    .portfolio-section h3 {
+        font-size: 22px;
+    }
+
+    .portfolio-list {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .portfolio-item {
+        width: 150px;
+        text-align: center;
+    }
+
+    .portfolio-item img,
+    .portfolio-item video {
+        width: 100%;
+        border: 1px solid #000;
+        background: white;
+    }
+
+    .menu-icon {
+        position: absolute;
+        right: 30px;
+        top: 20px;
+        font-size: 28px;
+        cursor: pointer;
+    }
+
+    .menu-popup {
+        position: absolute;
+        top: 60px;
+        right: 30px;
+        background: white;
+        border-radius: 20px;
+        padding: 20px;
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        font-size: 18px;
+    }
+
+    .menu-popup.active {
+        display: flex;
+    }
+
