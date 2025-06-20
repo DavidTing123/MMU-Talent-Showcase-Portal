@@ -1,0 +1,155 @@
+/* forum.css - Styling for the forum page */
+
+body {
+    margin: 0; /* Remove default browser margin */
+    padding: 0; /* Remove default padding */
+    font-family: Arial, sans-serif; /* Use a clean, readable font */
+    background-color: #e5ded3; /* Light beige background for a soft look */
+}
+
+header {
+    display: flex; /* Use flexbox to arrange items horizontally */
+    align-items: center; /* Vertically center items */
+    justify-content: space-between; /* Push logo left, search/profile right */
+    padding: 15px 30px; /* Space around header content */
+    background-color: #dcd3c3; /* Slightly darker beige header */
+    border-bottom: 2px solid #aaa; /* Line to separate header from content */
+}
+
+.logo {
+    width: 80px; /* Set width for logo image */
+}
+
+.header-right {
+    display: flex; /* Arrange search input and profile icon horizontally */
+    align-items: center; /* Align them vertically */
+    gap: 10px; /* Space between search bar and icon */
+}
+
+.search-bar {
+    padding: 5px; /* Inner spacing inside search bar */
+    margin-right: 10px; /* Space to the right */
+    border-radius: 4px; /* Slightly rounded corners */
+    border: 1px solid #888; /* Gray border */
+}
+
+.profile-icon {
+    width: 28px; /* Size of profile icon */
+    height: 28px;
+    border-radius: 50%; /* Make it circular */
+}
+
+input[type="text"] {
+    padding: 5px 10px; /* Inner space inside text fields */
+    border-radius: 15px; /* Rounded corners for input */
+    border: 1px solid #555; /* Darker border for definition */
+}
+
+main {
+    padding: 20px 40px; /* Padding around main content */
+}
+
+h2 {
+    font-size: 2em; /* Make welcome message bigger */
+    font-weight: bold; /* Make it bold */
+}
+
+button {
+    padding: 8px 15px; /* Space inside button */
+    border: none; /* Remove default border */
+    border-radius: 20px; /* Rounded button edges */
+    background-color: #f0f0f0; /* Light gray background */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-weight: bold; /* Emphasize button text */
+}
+
+/* Add Topic Button Styling */
+#addTopicBtn {
+    padding: 10px 20px; /* Padding inside the button */
+    background-color: #a1937e; /* Brownish background */
+    color: #fff; /* White text */
+    font-weight: bold; /* Bold text */
+    border: none; /* Remove default border */
+    border-radius: 12px; /* Round the corners */
+    margin-bottom: 20px; /* Space under the button */
+    cursor: pointer; /* Show pointer on hover */
+}
+
+/* Container for all the topic cards */
+#topics {
+    margin-top: 20px; /* Space above the list */
+    display: flex; /* Use flex to arrange topics */
+    flex-direction: column; /* Stack cards vertically */
+    gap: 20px; /* Space between each card */
+}
+
+/* Each individual topic card */
+.card {
+    background-color: #faf9f6; /* Light card background */
+    border: 1px solid #aaa; /* Light gray border */
+    border-radius: 10px; /* Rounded card corners */
+    padding: 15px; /* Space inside the card */
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.1); /* Subtle shadow */
+    cursor: pointer; /* Clickable look */
+    transition: transform 0.2s; /* Smooth hover effect */
+}
+
+.card:hover {
+    transform: scale(1.01); /* Slight zoom on hover */
+    background-color: #f5f2ec; /* Slightly lighter color */
+}
+
+/* Container for username and topic name */
+.user-info {
+    display: flex; /* Horizontal layout */
+    justify-content: space-between; /* Space between username and topic name */
+    font-size: 16px; /* Text size */
+    margin-bottom: 10px; /* Space under this line */
+}
+
+.username {
+    font-weight: bold; /* Bold username */
+}
+
+.topic {
+    font-style: italic; /* Italic topic name */
+}
+
+.title {
+    font-size: 18px; /* Bigger font for title */
+    font-weight: bold; /* Emphasize the title */
+}
+
+/* Style all text inputs, dropdowns, and textarea inside the form */
+#topicForm input[type="text"],
+#topicForm textarea,
+#topicForm select {
+    width: 100%; /* Take full width of form */
+    padding: 8px; /* Space inside input */
+    border-radius: 8px; /* Rounded input edges */
+    border: 1px solid #ccc; /* Light gray border */
+    margin-bottom: 10px; /* Space between form elements */
+    font-size: 14px; /* Slightly larger text */
+}
+
+/* Style for the textarea specifically */
+#topicForm textarea {
+    height: 100px; /* Set height */
+    resize: vertical; /* Allow vertical resize */
+}
+
+/* Style the form submit button */
+#topicForm button {
+    background-color: #c5baa7; /* Beige background */
+    color: #000; /* Black text */
+    border-radius: 10px; /* Rounded button */
+    font-weight: bold; /* Bold text */
+    cursor: pointer; /* Pointer on hover */
+    padding: 8px 20px; /* Padding inside button */
+}
+
+/* Add a nice box around the form */
+#topicForm {
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Soft shadow around form */
+    background-color: #fff; /* White background */
+}
