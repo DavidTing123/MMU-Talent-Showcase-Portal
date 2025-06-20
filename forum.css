@@ -1,0 +1,160 @@
+/* forum.css - Styling for the forum page using SQL */
+
+/* General Page Style */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e5ded3; /* Light cream background */
+}
+
+/* Header Section */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background-color: #dcd3c3; /* Light beige */
+    border-bottom: 2px solid #aaa;
+}
+
+/* MMU Logo */
+.logo {
+    width: 80px;
+}
+
+/* Right Side of Header (search + profile) */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Search Bar */
+input[type="text"] {
+    padding: 5px 10px;
+    border-radius: 15px;
+    border: 1px solid #555;
+}
+
+/* Profile Icon */
+.profile-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+}
+
+/* Main Container */
+main {
+    padding: 20px 40px;
+}
+
+/* Welcome Text */
+h2 {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+/* Add Topic Button */
+button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Topic Form Fields */
+#topicForm input[type="text"],
+#topicForm textarea,
+#topicForm select,
+#topicForm input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+/* Textarea Adjustments */
+#topicForm textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+/* Submit Button Style */
+#topicForm button {
+    background-color: #c5baa7;
+    color: #000;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 8px 20px;
+}
+
+/* Topic Form Container */
+#topicForm {
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background-color: #fff;
+    display: none; /* Hidden by default (controlled by JS) */
+    margin-top: 20px;
+}
+
+/* Topic Cards Container */
+#topics {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Single Topic Card */
+.card {
+    background-color: #faf9f6;
+    border: 1px solid #aaa;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+/* Hover effect on topic card */
+.card:hover {
+    transform: scale(1.01);
+    background-color: #f5f2ec;
+}
+
+/* Card Header (Username + Topic) */
+.user-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/* Username Bold */
+.username {
+    font-weight: bold;
+}
+
+/* Topic Italic */
+.topic {
+    font-style: italic;
+}
+
+/* Topic Title Bold */
+.title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Media inside View Page */
+.media-display img,
+.media-display video {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-top: 15px;
+}
