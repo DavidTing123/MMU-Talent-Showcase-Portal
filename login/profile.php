@@ -9,7 +9,7 @@ $category = "";
 $bio = "";
 $message = "";
 
-// ✅ 上傳大頭貼
+// 上傳大頭貼
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["upload_pic"])) {
     if (isset($_FILES["profile_pic"]) && $_FILES["profile_pic"]["error"] == 0) {
         $pic = $_FILES["profile_pic"];
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["upload_pic"])) {
     }
 }
 
-// ✅ 刪除作品
+// 刪除作品
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete_id"])) {
     $deleteId = $_POST["delete_id"];
     $stmt = $conn->prepare("SELECT file_path FROM portfolio WHERE portfolio_id = ? AND user_id = ?");
@@ -51,13 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete_id"])) {
     }
 }
 
-// ✅ 讀取使用者資料
-$stmt = $conn->prepare("
-    SELECT u.email, p.name, p.talent_category, p.bio, p.profile_picture
-    FROM users u
-    JOIN user_profile p ON u.user_id = p.user_id
-    WHERE u.user_id = ?
-");
+// 讀取使用者資料
+$stmt = $conn->prepare("SELECT u.email, p.name, p.talent_category, p.bio, p.profile_picture FROM users u JOIN user_profile p ON u.user_id = p.user_id WHERE u.user_id = ?");
 $stmt->execute([$user_id]);
 $data = $stmt->fetch();
 
@@ -66,12 +61,10 @@ if ($data) {
     $name = $data["name"];
     $category = $data["talent_category"];
     $bio = $data["bio"];
-    $pic_path = (isset($data["profile_picture"]) && file_exists($data["profile_picture"]))
-        ? $data["profile_picture"]
-        : "default-avatar.png";
+    $pic_path = (isset($data["profile_picture"]) && file_exists($data["profile_picture"])) ? $data["profile_picture"] : "default-avatar.png";
 }
 
-// ✅ 初始化作品集
+// 讀取作品集
 $portfolios = [];
 $stmt = $conn->prepare("SELECT * FROM portfolio WHERE user_id = ?");
 $stmt->execute([$user_id]);
@@ -86,22 +79,19 @@ $portfolios = $stmt->fetchAll();
 </head>
 <body>
 <div class="profile-container">
-
     <div class="menu-icon" onclick="document.querySelector('.menu-popup').classList.toggle('active')">
         ☰
     </div>
-
     <div class="menu-popup">
         <a href="index.php">Home</a>
         <a href="catalogue.php">Catalogue</a>
         <a href="forum.php">Forum</a>
         <a href="FAQs.php">FAQs</a>
         <a href="registration.php">Sign Up</a>
-        <a href="shoppingcart.php">Shoping</a>
+        <a href="shoppingcart.php">Shopping</a>
     </div>
 
     <h2>My Profile</h2>
-
     <?php if ($message): ?>
         <p style="color:green;"><?= $message ?></p>
     <?php endif; ?>
@@ -114,11 +104,10 @@ $portfolios = $stmt->fetchAll();
                 <img src="<?= $pic_path ?>" onclick="document.getElementById('profilePicInput').click();">
             </form>
             <a href="edit_bio.php" style="text-decoration:none; color:inherit;">
-    <div class="bio-box" title="Click to edit your bio">
-        <?= nl2br(htmlspecialchars($bio)) ?>
-    </div>
-</a>
-
+                <div class="bio-box" title="Click to edit your bio">
+                    <?= nl2br(htmlspecialchars($bio)) ?>
+                </div>
+            </a>
         </div>
 
         <div class="info-box">
@@ -126,62 +115,59 @@ $portfolios = $stmt->fetchAll();
             <p><strong>Email:</strong> <?= htmlspecialchars($email) ?></p>
             <p><strong>Talent Category:</strong> <?= htmlspecialchars($category) ?></p>
             <button class="edit-btn" onclick="location.href='edit_info.php'">Edit Info</button>
-            <!-- <button class="edit-btn" onclick="location.href='edit_bio.php'">Edit Bio</button> -->
-            <!-- <button class="edit-btn" onclick="location.href='edit_profile.php'">Edit Information</button> -->
         </div>
     </div>
 
     <div class="portfolio-section">
         <h3>Portfolio(s) <a href="upload_portfolio.php" class="edit-btn" style="font-size:14px;">Upload</a></h3>
-<div class="portfolio-list">
-    <?php if (count($portfolios) === 0): ?>
-        <p style="margin-left: 10px;">You haven't uploaded any portfolio yet.</p>
-    <?php else: ?>
-        <?php foreach ($portfolios as $p): ?>
-            <?php
-                $filePath = $p["file_path"];
-                $fileType = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
-            ?>
-            <div class="portfolio-item">
-                <strong><?= htmlspecialchars($p["title"]) ?></strong><br>
+        <div class="portfolio-list">
+            <?php if (count($portfolios) === 0): ?>
+                <p style="margin-left: 10px;">You haven't uploaded any portfolio yet.</p>
+            <?php else: ?>
+                <?php foreach ($portfolios as $p): ?>
+                    <?php
+                        $filePath = $p["file_path"];
+                        $fileExt = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+                        $thumb = isset($p["thumbnail_path"]) && file_exists($p["thumbnail_path"]) ? $p["thumbnail_path"] : null;
+                    ?>
+                    <div class="portfolio-item">
+                        <strong><?= htmlspecialchars($p["title"]) ?></strong><br>
+                        <a href="view_portfolio.php?id=<?= $p["portfolio_id"] ?>&back=profile.php">
+                            <?php if ($thumb): ?>
+                                <img src="<?= $thumb ?>" style="max-width: 100%; height: auto; border-radius: 8px;">
+                            <?php elseif (in_array($fileExt, ['jpg', 'jpeg', 'png', 'gif'])): ?>
+                                <img src="<?= $filePath ?>" style="max-width: 100%; height: auto; border-radius: 8px;">
+                            <?php elseif ($fileExt === 'mp4'): ?>
+                                <video style="width:100%; border-radius:8px;" muted>
+                                    <source src="<?= $filePath ?>" type="video/mp4">
+                                </video>
+                            <?php elseif ($fileExt === 'mp3'): ?>
+                                <div style="text-align:center; padding:10px;">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/727/727245.png" width="60" alt="MP3 Icon">
+                                    <div style="font-size:14px;">MP3 Audio</div>
+                                </div>
+                            <?php elseif ($fileExt === 'pdf'): ?>
+                                <div style="text-align:center; padding:10px;">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" width="60" alt="PDF Icon">
+                                    <div style="font-size:14px;">PDF File</div>
+                                </div>
+                            <?php else: ?>
+                                <p>No preview available.</p>
+                            <?php endif; ?>
+                        </a>
 
-                <a href="view_portfolio.php?id=<?= $p["portfolio_id"] ?>&back=profile.php">
-                    <?php if (in_array($fileType, ['jpg', 'jpeg', 'png', 'gif'])): ?>
-                        <img src="<?= $filePath ?>" style="max-width: 100%; height: auto; border-radius: 8px;">
-                    <?php elseif ($fileType === 'mp4'): ?>
-                        <video style="width: 100%; border-radius: 8px;" muted>
-                            <source src="<?= $filePath ?>" type="video/mp4">
-                        </video>
-                    <?php endif; ?>
-                </a>
+                        <a href="edit_portfolio.php?id=<?= $p["portfolio_id"] ?>" style="font-size: 14px; color: blue;">✏️ Edit</a>
 
-
-                <a href="edit_portfolio.php?id=<?= $p["portfolio_id"] ?>" style="font-size: 14px; color: blue;">✏️ Edit</a>
-
-                <form method="POST" style="margin-top:5px;">
-                    <input type="hidden" name="delete_id" value="<?= $p["portfolio_id"] ?>">
-                    <button type="submit" onclick="return confirm('Are you sure you want to delete this work?')">Delete</button>
-                </form>
-            </div>
-        <?php endforeach; ?>
-    <?php endif; ?>
+                        <form method="POST" style="margin-top:5px;">
+                            <input type="hidden" name="delete_id" value="<?= $p["portfolio_id"] ?>">
+                            <button type="submit" onclick="return confirm('Are you sure you want to delete this work?')">Delete</button>
+                        </form>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+        <br><a href="logout.php">Logout</a>
     </div>
-
-    <br><a href="logout.php">Logout</a>
 </div>
-<script>
-function openFullscreen(imgElement) {
-    if (imgElement.requestFullscreen) {
-        imgElement.requestFullscreen();
-    } else if (imgElement.webkitRequestFullscreen) {
-        imgElement.webkitRequestFullscreen();
-    } else if (imgElement.msRequestFullscreen) {
-        imgElement.msRequestFullscreen();
-    }
-}
-</script>
-
 </body>
 </html>
-
-

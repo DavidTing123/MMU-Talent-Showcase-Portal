@@ -26,13 +26,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $description = htmlspecialchars(trim($_POST["description"]));
     $price = floatval($_POST["price"]);
 
-    $update = $conn->prepare("UPDATE portfolio SET description = ?, price = ? WHERE portfolio_id = ? AND user_id = ?");
-    $update->execute([$description, $price, $portfolio_id, $user_id]);
+    // ✅ 防止負數價格
+    if ($price < 0) {
+        $message = "❌ Price must be a positive number.";
+    } else {
+        $update = $conn->prepare("UPDATE portfolio SET description = ?, price = ? WHERE portfolio_id = ? AND user_id = ?");
+        $update->execute([$description, $price, $portfolio_id, $user_id]);
 
-    $message = "✅ Portfolio updated successfully.";
-    // 重新查詢最新資料
-    $stmt->execute([$portfolio_id, $user_id]);
-    $portfolio = $stmt->fetch();
+        $message = "✅ Portfolio updated successfully.";
+        // 重新查詢最新資料
+        $stmt->execute([$portfolio_id, $user_id]);
+        $portfolio = $stmt->fetch();
+    }
 }
 ?>
 
@@ -46,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <h2>Edit Portfolio</h2>
 
     <?php if ($message): ?>
-        <p style="color:green;"><?= $message ?></p>
+        <p style="color:<?= strpos($message, '✅') !== false ? 'green' : 'red' ?>;"><?= $message ?></p>
     <?php endif; ?>
 
     <p><strong>Title:</strong> <?= htmlspecialchars($portfolio["title"]) ?></p>
@@ -57,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <textarea name="description" rows="5" cols="50"><?= htmlspecialchars($portfolio["description"]) ?></textarea><br><br>
 
         <label>Price (RM):</label><br>
-        <input type="number" name="price" value="<?= htmlspecialchars($portfolio["price"]) ?>" step="0.01" required><br><br>
+        <input type="number" name="price" value="<?= htmlspecialchars($portfolio["price"]) ?>" step="0.01" min="0" required><br><br>
 
         <button type="submit">Save Changes</button>
     </form>
