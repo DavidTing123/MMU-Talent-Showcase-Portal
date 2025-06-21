@@ -147,9 +147,6 @@ foreach ($all_works as $work) {
                         <div style="font-size:14px;">PDF Preview</div>
                     </div>
                 <?php endif; ?>
-                <div style="text-align:center; padding:20px;">
-                    📎 <strong><?= strtoupper($fileExt) ?> File</strong>
-                </div>
                 <strong><?= htmlspecialchars($item["title"]) ?></strong><br>
                 <em><?= htmlspecialchars($item["category"]) ?></em><br>
             </div>
